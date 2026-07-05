@@ -63,8 +63,7 @@ During this project, I leveraged **Antigravity** (Gemini 3.5 Flash) to assist wi
      4. Observe that the user's `listening_streak` is reset to 1 instead of incrementing to 6.
 3. **How you found the root cause**: Checked [services/streak_service.py](file:///home/lezu/Projects/codepath/ai201/ai201-project5-mixtape-starter/services/streak_service.py) in `update_listening_streak()`. Saw the day comparison logic on line 73.
 4. **The root cause**: Python's `datetime.weekday()` returns `6` for Sunday. The condition `elif days_since_last == 1 and today.weekday() != 6` explicitly prevents streaks from incrementing on Sundays, resetting them instead.
-5. **Fix and side-effect check**:
-
+5. **Fix and side-effect check**: Modified the conditional branch in [services/streak_service.py](file:///home/lezu/Projects/codepath/ai201/ai201-project5-mixtape-starter/services/streak_service.py) to remove the `and today.weekday() != 6` check. The updated branch now simply checks `elif days_since_last == 1:`, which correctly increments the user's streak for any consecutive-day listen event, regardless of which day of the week it is. Running `.venv/bin/pytest tests/test_streaks.py` verifies that all streak tests pass, including the previously failing `test_streak_increments_on_sunday` test, and checking day transitions in other parts of the app confirms no regression was introduced.
 
 
 ### Issue #2: Friends Listening Now shows people from yesterday
