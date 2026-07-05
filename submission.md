@@ -77,7 +77,7 @@ During this project, I leveraged **Antigravity** (Gemini 3.5 Flash) to assist wi
    - **Method B (API Call)**: Seed the database and start the server, then issue a `GET /feed/<user_id>/listening-now`. The returned JSON includes listening events from 18+ hours ago.
 3. **How you found the root cause**: Checked [services/feed_service.py](file:///home/lezu/Projects/codepath/ai201/ai201-project5-mixtape-starter/services/feed_service.py).
 4. **The root cause**: The `RECENT_THRESHOLD` used for filtering current listen events is set to `timedelta(hours=24)`. This window is far too wide for a real-time "Listening Now" feature, showing activity from the previous day.
-5. **Fix and side-effect check**:
+5. **Fix and side-effect check**: Changed the `RECENT_THRESHOLD` in [services/feed_service.py](file:///home/lezu/Projects/codepath/ai201/ai201-project5-mixtape-starter/services/feed_service.py) on line 13 from `timedelta(hours=24)` to `timedelta(minutes=30)` based on comments in the database seeder indicating that only listening activity in the last 30 minutes should qualify as "currently listening". Checked the general activity feed endpoint `/feed/<user_id>/activity` to verify that it is still displaying all historical logs (since it does not rely on `RECENT_THRESHOLD`), ensuring the main feed behavior was not disrupted by this adjustment.
 
 
 ### Issue #3: The same song keeps showing up twice in search
