@@ -89,7 +89,7 @@ During this project, I leveraged **Antigravity** (Gemini 3.5 Flash) to assist wi
      2. Note that in multi-tag database contexts or raw SQL queries containing outer joins against the `song_tags` table, multiple rows are generated (one for each tag). In environments where session-level deduplication is bypassed, this returns duplicate items in the JSON list response.
 3. **How you found the root cause**: Inspected [services/search_service.py](file:///home/lezu/Projects/codepath/ai201/ai201-project5-mixtape-starter/services/search_service.py) in `search_songs()`.
 4. **The root cause**: The database query performs an outer join with `song_tags`: `db.session.query(Song).outerjoin(song_tags, Song.id == song_tags.c.song_id)`. Because a song can have multiple tags, this join generates multiple rows for the same song. Since distinct is not enforced, duplicate objects are returned.
-5. **Fix and side-effect check**:
+5. **Fix and side-effect check**: Removed the redundant `.outerjoin(song_tags, Song.id == song_tags.c.song_id)` call from the query in [services/search_service.py](file:///home/lezu/Projects/codepath/ai201/ai201-project5-mixtape-starter/services/search_service.py). Since the `Song` model already uses subquery loading for its tags relationship (`lazy="subquery"`), the join was unnecessary for tag data retrieval and only generated duplicate rows in SQL. Running `.venv/bin/pytest tests/test_search.py` confirms that search tests pass, and manually running the search endpoint verifies that search results now return exactly one dictionary object per song without duplicate items.
 
 
 ### Issue #4: I got notified when a friend added my song to a playlist but not when they rated it
