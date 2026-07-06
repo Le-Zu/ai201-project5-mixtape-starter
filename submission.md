@@ -3,7 +3,7 @@
 ## AI Usage Section
 
 During this project, I leveraged **Antigravity** (Gemini 3.5 Flash) to assist with codebase navigation, analysis, and locating test failures:
-- **Codebase Navigation & Summarization**: We used the agent to explore the directory structure, read core files like [models.py](file:///home/lezu/Projects/codepath/ai201/ai201-project5-mixtape-starter/models.py), and trace the request/response flow from the [routes/](file:///home/lezu/Projects/codepath/ai201/ai201-project5-mixtape-starter/routes/) blueprint controllers to the [services/](file:///home/lezu/Projects/codepath/ai201/ai201-project5-mixtape-starter/services/) business logic.
+- **Codebase Navigation & Summarization**: I used the agent to explore the directory structure, read core files like [models.py](file:///home/lezu/Projects/codepath/ai201/ai201-project5-mixtape-starter/models.py), and trace the request/response flow from the [routes/](file:///home/lezu/Projects/codepath/ai201/ai201-project5-mixtape-starter/routes/) blueprint controllers to the [services/](file:///home/lezu/Projects/codepath/ai201/ai201-project5-mixtape-starter/services/) business logic.
 - **Root Cause & Test Analysis**: Executed `pytest` through terminal integration to run the suite, identifying 3 specific test failures out-of-the-box. I used code-reading prompts to inspect the logic and determine the exact conditions causing the bugs.
 - **Verification**: All findings and code logic were manually reviewed and verified by checking standard datetime rules, SQL join mechanics, and list slicing parameters in Python.
 
